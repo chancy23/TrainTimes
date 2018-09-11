@@ -16,10 +16,10 @@ $(document).ready(function() {
     var database = firebase.database();
 
     //global variables=================================================
-    var trainName = "";
-    var destination = "";
-    var firstTrainTime = "";
-    var frequency = "";
+    // var trainName = "";
+    // var destination = "";
+    // var firstTrainTime = "";
+    // var frequency = "";
 
     //functions========================================================
 
@@ -35,12 +35,12 @@ $(document).ready(function() {
         event.preventDefault();
 
         //get values from inputs and assign to variables
-        trainName = $("#trainName").val().trim();
-        destination = $("#destination").val().trim();
+        var trainName = $("#trainName").val().trim();
+        var destination = $("#destination").val().trim();
         //add moment js formatting to ensure in military time HH:mm
-        //firstTrainTime = $("#firstTrainTime").val().trim();
-        firstTrainTime = moment($("#firstTrainTime").val().trim(), "HH:mm").format("HH:mm");
-        frequency = $("#frequency").val().trim();
+        //var firstTrainTime = $("#firstTrainTime").val().trim();
+        var firstTrainTime = moment($("#firstTrainTime").val().trim(), "HH:mm").format("HH:mm");
+        var frequency = $("#frequency").val().trim();
 
         //put variables in an object for database use
         var newTrainInfo = {
@@ -49,6 +49,12 @@ $(document).ready(function() {
             firstTime: firstTrainTime,
             frequency: frequency
         };
+
+        //testing
+        console.log("train time input: " + trainName);
+        console.log("this is destination input: " +destination);
+        console.log("this is the first train time input: " + firstTrainTime);
+        console.log("thhi is the frequency input: " + frequency);
 
         //database.ref().push object for new train info to create a child node
         database.ref().push(newTrainInfo);
@@ -67,37 +73,41 @@ $(document).ready(function() {
     database.ref().on("child_added", function(snapshotChild) {
         //create a variable to hold the child value
         var cv = snapshotChild.val();
-
         //assign the child snapshot values to the  variables
         trainName = cv.name;
         destination = cv.destination;
-        firstTrainTime = cv.firstTrainTime;
+        //var firstTrainTime = "09:00";
+        // firstTrainTime = moment(cv.firstTrainTime).format("HH:mm");
+        firstTrainTime = cv.firstTime;
         frequency = cv.frequency;
 
         //testing section
         console.log(trainName);
         console.log(destination);
+        //NOTE: its saying the first train time is undefined...why??
         console.log("first train time " + firstTrainTime);
         console.log("frequency " + frequency);
 
         //convert the first time to 1 year ago to prevent issues
-        var firstTrainTimeConv = moment(firstTrainTime).subtract(1, "years");
+        var firstTrainTimeConv = moment(firstTrainTime, "HH:mm").subtract(1, "years");
             console.log("first train time converted " + firstTrainTimeConv);
 
         //take the difference from the first time and the current time (current time is moment())
-        var currentTime = moment().format("HH:mm");
-            console.log("current time: " + currentTime);
+        var currentTime = moment()
+            console.log("current time: " + moment(currentTime).format("HH:mm"));
 
         //get the time difference in minutes
-        var timeDiff = moment().diff(moment(firstTrainTimeConv), "minutes");
+        //NOTE: This is ALWAYS zero, I think because of the first train time being undefined
+        var timeDiff = currentTime.diff(moment(firstTrainTimeConv), "minutes");
             console.log("time difference " + timeDiff);
 
+        //this is the remaining time b
         var timeRemainder = timeDiff % frequency;
-            console.log("this is the remaining time: " + timeRemainder);
+            console.log("remaining time: " + timeRemainder);
 
         //get the minutes to the next train
         var minAway = frequency - timeRemainder;
-            console.log("this is minutes until next train: " + minAway);
+            console.log("minutes until next train: " + minAway);
 
         //take the time from the first arrival to current time and assign to var for next arrival based on the frequency
         var nextArrival = moment().add(minAway, "minutes");
