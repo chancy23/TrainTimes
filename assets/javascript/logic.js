@@ -15,57 +15,45 @@ $(document).ready(function() {
     //create variable to call database
     var database = firebase.database();
 
-    //global variables=================================================
-    // var trainName = "";
-    // var destination = "";
-    // var firstTrainTime = "";
-    // var frequency = "";
-
-    //functions========================================================
-
-    function timePredictor() {
-        
-
-    };
-
     //on click functions===============================================
 
     //onclick for submit button
     $("#submit").on("click", function(event) {
         event.preventDefault();
 
-        //get values from inputs and assign to variables
+         //get values from inputs and assign to variables
         var trainName = $("#trainName").val().trim();
         var destination = $("#destination").val().trim();
         //add moment js formatting to ensure in military time HH:mm
         var firstTrainTime = moment($("#firstTrainTime").val().trim(), "HH:mm").format("HH:mm");
         var frequency = $("#frequency").val().trim();
+        
+        //if values are blank then alert user via modal and don't commit to db
+        if ((trainName === "") || (destination === "") || (firstTrainTime === "") || (frequency === "")) {
+            $("#incompFormModal").modal("show");
+            return false;
+        }
+        else {
+            //display success modal
+            $("#successModal").modal("show");
 
-        //put variables in an object for database use
-        var newTrainInfo = {
-            name: trainName,
-            destination: destination,
-            firstTime: firstTrainTime,
-            frequency: frequency
+            //put variables in an object for database use
+            var newTrainInfo = {
+                name: trainName,
+                destination: destination,
+                firstTime: firstTrainTime,
+                frequency: frequency
+            };
+            
+            //push the object for new train info to the DB to create a child node
+            database.ref().push(newTrainInfo);
+
+            //clear inputs from form
+            $("#trainName").val("");
+            $("#destination").val("");
+            $("#firstTrainTime").val("");
+            $("#frequency").val("");
         };
-
-        //push the object for new train info to the DB to create a child node
-        database.ref().push(newTrainInfo);
-
-        //alert new train added successfully (change to boostrap modal later?)
-        alert("New Train Added Successfully");
-
-        //clear inputs after submit is hit
-        $("#trainName").val("");
-        $("#destination").val("");
-        $("#firstTrainTime").val("");
-        $("#frequency").val("");
-
-        //testing
-        // console.log("train time input: " + trainName);
-        // console.log("this is destination input: " + destination);
-        // console.log("this is the first train time input: " + firstTrainTime);
-        // console.log("thhi is the frequency input: " + frequency);
     });
 
     //on child event for datbase to be call to get the snapshot values
@@ -78,12 +66,6 @@ $(document).ready(function() {
         destination = cv.destination;
         firstTrainTime = cv.firstTime;
         frequency = cv.frequency;
-
-        //testing section
-        console.log(trainName);
-        console.log(destination);
-        console.log("first train time " + firstTrainTime);
-        console.log("frequency " + frequency);
 
         //convert the first time to 1 year ago to prevent issues (and make sure its in military time)
         var firstTrainTimeConv = moment(firstTrainTime, "HH:mm").subtract(1, "years"); 
@@ -103,15 +85,14 @@ $(document).ready(function() {
         var nextArrival = moment().add(minAway, "minutes").format("hh:mm A");
 
         //time testing section
-        console.log("first train time converted " + firstTrainTimeConv);
-        console.log("time difference " + timeDiff);
-        console.log("remaining time: " + timeRemainder);
-        console.log("minutes until next train: " + minAway);
-        console.log("the next arrival " + nextArrival);
+        // console.log("first train time converted " + firstTrainTimeConv);
+        // console.log("time difference " + timeDiff);
+        // console.log("remaining time: " + timeRemainder);
+        // console.log("minutes until next train: " + minAway);
+        // console.log("the next arrival " + nextArrival);
 
-        //make a var for a new table row
+        //make a var for a new table row and create a td for each variable and append to the table row
         var newRow = $("<tr>").append(
-        //create a td for each variable and append to the table row
         $("<td>").text(trainName),
         $("<td>").text(destination),
         $("<td>").text(frequency),

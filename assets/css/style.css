@@ -1,3 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC|Quattrocento:400,700');
+
+body {
+    background-image: url("../images/whitepaper_background.jpg");
+    background-color: rgb(230,229,225);
+    font-family: 'Quattrocento', serif;
+}
+
 .card {
     margin-bottom: 20px;
+    color: rgb(95, 95, 95)
 }
+
+.table,
+.display-4 {
+    text-align: center;
+}
+
+th {
+    font-family: 'Quattrocento:700', serif;
+}
+
+.display-4 {
+    font-family: 'Playfair Display SC', serif;
+    color: rgb(17, 102, 141);
+    font-size: 4rem;
+}
+
+.jumbotron {
+    background-image: url("../images/train_background_faded.jpg");
+}
+
+.btn-primary {
+    background-color: rgb(17, 102, 141);
+    border: 1pt solid gray;
+}
+
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(:disabled):active {
+    background-color: rgb(4, 69, 99);
+}
+
+/* make the container 95% at 768px */
+

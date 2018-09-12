@@ -4,22 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Train Arrival Predictor</title>
+    <title>Train Scheduler</title>
+    <link rel="shortcut icon" type="image/png" href="./assets/images/reminder_icon.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <!-- jumbotron header -->
-    <div class="container col-sm-10">
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4">Train Arrival Predictor</h1>
-                <!-- <p class="lead">A detailed report of each employee, their time worked and total paid.</p> -->
+        <!-- Modal for successful add -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    The schedule was added successfully.
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Modal for blank fields  -->
+        <div class="modal fade" id="incompFormModal" tabindex="-1" role="dialog" aria-labelledby="incompFormModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="incompFormModalLabel">Oops!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    All fields are required. Please add the missing information.
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="container col-md-8">
+        <!-- jumbotron header -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Train Scheduler</h1>
+            </div>
+        </div>
+
         <!-- table in a card to show the train schedules -->
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Train Schedules</h5>
@@ -43,11 +84,11 @@
 
         <!-- place to input train information -->
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Add Train</h5>
-                        <form>
+                        <form id="addTrainForm">
                             <div class="form-group">
                                 <label for="trainName">Train Name</label>
                                 <input type="text" class="form-control" id="trainName" aria-describedby="trainName">
@@ -68,19 +109,18 @@
                                 <input type="text" class="form-control" id="frequency" aria-describedby="frequency">
                             </div>
 
-                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#successModal" id="submit">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         
-      
-            
-        </div>
 
     <!-- jquery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- bootstrap JS/jquery for modal -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- moment JS CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
     <!-- link to Firebase DB -->
