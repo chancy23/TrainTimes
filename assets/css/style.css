@@ -12,7 +12,8 @@ body {
 }
 
 .table,
-.display-4 {
+.display-4,
+h4 {
     text-align: center;
 }
 
@@ -24,6 +25,10 @@ th {
     font-family: 'Playfair Display SC', serif;
     color: rgb(17, 102, 141);
     font-size: 4rem;
+}
+h4 {
+    font-family: 'Playfair Display SC', serif;
+    color: rgb(17, 102, 141);
 }
 
 .jumbotron {
@@ -40,5 +45,19 @@ th {
     background-color: rgb(4, 69, 99);
 }
 
-/* make the container 95% at 768px */
+/* make adjustments to font size to properly display at small screens */
+@media screen and (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    body {
+        font-size: .5rem;
+    }
+    h5 {
+        font-size: 1rem;
+    }
+}
 

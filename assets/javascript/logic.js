@@ -82,7 +82,7 @@ $(document).ready(function() {
         //take the time from now ("moment()") and add it to minutes away variable (in minutes format),
         //assign it to var for next arrival,
         //change format to normal looking time
-        var nextArrival = moment().add(minAway, "minutes").format("hh:mm A");
+        var nextArrival = moment().add(minAway, "minutes").format("h:mm A");
 
         //time testing section
         // console.log("first train time converted " + firstTrainTimeConv);
@@ -103,5 +103,9 @@ $(document).ready(function() {
         //append table row to the tbody section of the table
         $("tbody").append(newRow);
     });
+
+    //Display Current Time in jumbotron
+    var currentTime = moment().format("h:mm:ss A")
+    $("#currentTime").append(currentTime);
 
 })
