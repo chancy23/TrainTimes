@@ -16,6 +16,8 @@ $(document).ready(function() {
     var database = firebase.database();
 
     //functions========================================================
+
+    //gets the current time from moment.js, and then places it in the dom
     function updateClock() {
         var now = moment(),
             minute = now.minutes("mm").format("mm"),
@@ -23,9 +25,14 @@ $(document).ready(function() {
 
         $("#hour").text(hour);
         $("#minute").text(minute);
-
+        //updates the minutes 
         setTimeout(updateClock, 1000);
     };
+
+    //Display and update current time in jumbotron
+    updateClock();
+    $("#ampm").append(moment().format("A"));
+
 
     //on click functions===============================================
 
@@ -109,14 +116,12 @@ $(document).ready(function() {
         $("<td>").text(destination),
         $("<td>").text(frequency),
         $("<td>").text(nextArrival),
-        $("<td>").text(minAway)
+        $("<td class='min'>").text(minAway)
         );
 
         //append table row to the tbody section of the table
         $("tbody").append(newRow);
+        
     });
-
-    //Display and update current time in jumbotron
-    $("#ampm").append(moment().format("A"));
-    updateClock();
+    
 })

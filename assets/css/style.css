@@ -21,17 +21,24 @@ th {
     font-family: 'Quattrocento:700', serif;
 }
 
+/* jumbotron styling */
+.jumbotron {
+    background-image: url("../images/train_background_faded.jpg");
+}
+
 .display-4 {
     font-family: 'Playfair Display SC', serif;
     color: rgb(17, 102, 141);
     font-size: 4rem;
 }
-h4 {
-    color: rgb(17, 102, 141);
+
+.my-3 {
+    background-color: rgb(17, 102, 141);
+    width: 45%;
 }
 
-.jumbotron {
-    background-image: url("../images/train_background_faded.jpg");
+h4 {
+    color: rgb(17, 102, 141);
 }
 
 .btn-primary {
@@ -48,6 +55,9 @@ h4 {
 @media screen and (max-width: 768px) {
     .display-4 {
         font-size: 2rem;
+    }
+    h4 {
+        font-size: .75rem;
     }
 }
 
