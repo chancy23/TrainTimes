@@ -6,22 +6,6 @@ body {
     font-family: 'Quattrocento', serif;
 }
 
-.card {
-    margin-bottom: 20px;
-    color: rgb(95, 95, 95)
-}
-
-.table,
-.display-4,
-h4 {
-    text-align: center;
-}
-
-th {
-    font-family: 'Quattrocento:700', serif;
-}
-
-/* jumbotron styling */
 .jumbotron {
     background-image: url("../images/train_background_faded.jpg");
 }
@@ -39,6 +23,23 @@ th {
 
 h4 {
     color: rgb(17, 102, 141);
+}
+
+.card {
+    margin-bottom: 20px;
+    color: rgb(95, 95, 95)
+}
+
+.table,
+.display-4,
+h4 {
+    text-align: center;
+}
+
+.table thead th {
+    font-family: 'Quattrocento:700', serif;
+    vertical-align: bottom;
+    border-top: none;
 }
 
 .btn-primary {
