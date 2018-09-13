@@ -15,6 +15,18 @@ $(document).ready(function() {
     //create variable to call database
     var database = firebase.database();
 
+    //functions========================================================
+    function updateClock() {
+        var now = moment(),
+            minute = now.minutes("mm").format("mm"),
+            hour = now.hours("h").format("h");
+
+        $("#hour").text(hour);
+        $("#minute").text(minute);
+
+        setTimeout(updateClock, 1000);
+    };
+
     //on click functions===============================================
 
     //onclick for submit button
@@ -104,8 +116,7 @@ $(document).ready(function() {
         $("tbody").append(newRow);
     });
 
-    //Display Current Time in jumbotron
-    var currentTime = moment().format("h:mm:ss A")
-    $("#currentTime").append(currentTime);
-
+    //Display and update current time in jumbotron
+    $("#ampm").append(moment().format("A"));
+    updateClock();
 })
