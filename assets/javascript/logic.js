@@ -33,7 +33,6 @@ $(document).ready(function() {
     updateClock();
     $("#ampm").append(moment().format("A"));
 
-
     //on click functions===============================================
 
     //onclick for submit button
@@ -121,7 +120,5 @@ $(document).ready(function() {
 
         //append table row to the tbody section of the table
         $("tbody").append(newRow);
-        
     });
-    
 })
