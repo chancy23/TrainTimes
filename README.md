@@ -16,7 +16,7 @@ I've also added a display of the current time within the jumbotron header and us
   -Update the minutes to arrival in real time, without a page refresh.
 
 #Image Credits
-  -Jumbotron image and background pattern from PNGtree.com
+  -Jumbotron image, tab icon, and background pattern from PNGtree.com
 
 This app is deployed at: https://chancy23.github.io/TrainTimes/ 
 
