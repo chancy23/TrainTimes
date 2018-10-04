@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     //functions========================================================
 
-    //gets the current time from moment.js, and then places it in the dom
+    //gets the current time from moment.js and updates every second
     function updateClock() {
         var now = moment(),
             minute = now.minutes("mm").format("mm"),
@@ -42,11 +42,11 @@ $(document).ready(function() {
          //get values from inputs and assign to variables
         var trainName = $("#trainName").val().trim();
         var destination = $("#destination").val().trim();
-        //add moment js formatting to ensure in military time HH:mm
+        //add moment.js formatting to ensure in military time (HH:mm)
         var firstTrainTime = moment($("#firstTrainTime").val().trim(), "HH:mm").format("HH:mm");
         var frequency = $("#frequency").val().trim();
         
-        //if values are blank then alert user via modal and don't commit to db
+        //if values are blank then alert user via modal and don't commit to the DB
         if ((trainName === "") || (destination === "") || (firstTrainTime === "") || (frequency === "")) {
             $("#incompFormModal").modal("show");
             return false;
@@ -55,14 +55,13 @@ $(document).ready(function() {
             //display success modal
             $("#successModal").modal("show");
 
-            //put variables in an object for database use
+            //put variables in an object for DB use
             var newTrainInfo = {
                 name: trainName,
                 destination: destination,
                 firstTime: firstTrainTime,
                 frequency: frequency
             };
-            
             //push the object for new train info to the DB to create a child node
             database.ref().push(newTrainInfo);
 
@@ -74,51 +73,46 @@ $(document).ready(function() {
         };
     });
 
-    //on child event for datbase to be call to get the snapshot values
+    //on child event for DB to be called to get the snapshot values
     database.ref().on("child_added", function(snapshotChild) {
         //create a variable to hold the child value
         var cv = snapshotChild.val();
 
-        //assign the child snapshot values to the  variables
+        //assign the child snapshot values to the variables
         trainName = cv.name;
         destination = cv.destination;
         firstTrainTime = cv.firstTime;
         frequency = cv.frequency;
 
-        //convert the first time to 1 year ago to prevent issues (and make sure its in military time)
+        //Convert the first time to 1 year ago to prevent issues (and make sure its in military time again)
         var firstTrainTimeConv = moment(firstTrainTime, "HH:mm").subtract(1, "years"); 
-
-        //get the time difference from the current time (which is just "moment()") to the first trains arrival in minutes
+        //Get the time difference from the current time (which is just "moment()") to the first trains arrival format in minutes
         var timeDiff = moment().diff(moment(firstTrainTimeConv), "minutes");
-    
-        //take the modulus of the time difference and the frequency (this is the remaining time variable)
+        //Take the remainder (modulus) of the time difference and the frequency
         var timeRemainder = timeDiff % frequency;
-
-        //get the minutes to the next train by subtracting the remaining time variable from the frequency
+        //Get the minutes to the next train
         var minAway = frequency - timeRemainder; 
-
-        //take the time from now ("moment()") and add it to minutes away variable (in minutes format),
-        //assign it to var for next arrival,
+        //take the time from now ("moment()") and add it to minutes away variable (in minutes format)
         //change format to normal looking time
         var nextArrival = moment().add(minAway, "minutes").format("h:mm A");
 
         //time testing section
-        // console.log("first train time converted " + firstTrainTimeConv);
-        // console.log("time difference " + timeDiff);
-        // console.log("remaining time: " + timeRemainder);
-        // console.log("minutes until next train: " + minAway);
-        // console.log("the next arrival " + nextArrival);
+            // console.log("first train time converted " + firstTrainTimeConv);
+            // console.log("time difference " + timeDiff);
+            // console.log("remaining time: " + timeRemainder);
+            // console.log("minutes until next train: " + minAway);
+            // console.log("the next arrival " + nextArrival);
 
         //make a var for a new table row and create a td for each variable and append to the table row
-        var newRow = $("<tr>").append(
-        $("<td>").text(trainName),
-        $("<td>").text(destination),
-        $("<td>").text(frequency),
-        $("<td>").text(nextArrival),
-        $("<td class='min'>").text(minAway)
+        var $newRow = $("<tr>").append(
+            $("<td>").text(trainName),
+            $("<td>").text(destination),
+            $("<td>").text(frequency),
+            $("<td>").text(nextArrival),
+            $("<td>").text(minAway)
         );
 
         //append table row to the tbody section of the table
-        $("tbody").append(newRow);
+        $("tbody").append($newRow);
     });
 })
