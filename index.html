@@ -11,48 +11,48 @@
 </head>
 
 <body>
-        <!-- Modal for successful add -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Success!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        The schedule was added successfully.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal for blank fields  -->
-        <div class="modal fade" id="incompFormModal" tabindex="-1" role="dialog" aria-labelledby="incompFormModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="incompFormModalLabel">Oops!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- Modal for successful add -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </button>
+                </div>
 
-                    <div class="modal-body">
-                        All fields are required. Please add the missing information.
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
+                <div class="modal-body">
+                    The schedule was added successfully.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Modal for blank fields  -->
+    <div class="modal fade" id="incompFormModal" tabindex="-1" role="dialog" aria-labelledby="incompFormModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="incompFormModalLabel">Oops!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    All fields are required. Please add the missing information.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Container Area -->
     <div class="container col-md-8 mainContainer">
@@ -80,8 +80,7 @@
                                 <th scope="col">Minutes Away</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -122,7 +121,6 @@
             </div>
         </div>
         
-
     <!-- jquery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- bootstrap JS/jquery for modal -->

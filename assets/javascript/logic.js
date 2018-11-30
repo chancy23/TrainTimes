@@ -11,7 +11,6 @@ $(document).ready(function() {
     };
 
     firebase.initializeApp(config);
-
     //create variable to call database
     var database = firebase.database();
 
@@ -35,27 +34,20 @@ $(document).ready(function() {
 
     //on click functions===============================================
 
-    //onclick for submit button
     $("#submit").on("click", function(event) {
         event.preventDefault();
 
-         //get values from inputs and assign to variables
         var trainName = $("#trainName").val().trim();
         var destination = $("#destination").val().trim();
-        //add moment.js formatting to ensure in military time (HH:mm)
         var firstTrainTime = moment($("#firstTrainTime").val().trim(), "HH:mm").format("HH:mm");
         var frequency = $("#frequency").val().trim();
         
-        //if values are blank then alert user via modal and don't commit to the DB
         if ((trainName === "") || (destination === "") || (firstTrainTime === "") || (frequency === "")) {
             $("#incompFormModal").modal("show");
             return false;
         }
         else {
-            //display success modal
             $("#successModal").modal("show");
-
-            //put variables in an object for DB use
             var newTrainInfo = {
                 name: trainName,
                 destination: destination,
@@ -65,7 +57,6 @@ $(document).ready(function() {
             //push the object for new train info to the DB to create a child node
             database.ref().push(newTrainInfo);
 
-            //clear inputs from form
             $("#trainName").val("");
             $("#destination").val("");
             $("#firstTrainTime").val("");
@@ -75,10 +66,8 @@ $(document).ready(function() {
 
     //on child event for DB to be called to get the snapshot values
     database.ref().on("child_added", function(snapshotChild) {
-        //create a variable to hold the child value
         var cv = snapshotChild.val();
 
-        //assign the child snapshot values to the variables
         trainName = cv.name;
         destination = cv.destination;
         firstTrainTime = cv.firstTime;
@@ -90,10 +79,7 @@ $(document).ready(function() {
         var timeDiff = moment().diff(moment(firstTrainTimeConv), "minutes");
         //Take the remainder (modulus) of the time difference and the frequency
         var timeRemainder = timeDiff % frequency;
-        //Get the minutes to the next train
         var minAway = frequency - timeRemainder; 
-        //take the time from now ("moment()") and add it to minutes away variable (in minutes format)
-        //change format to normal looking time
         var nextArrival = moment().add(minAway, "minutes").format("h:mm A");
 
         //time testing section
@@ -103,7 +89,6 @@ $(document).ready(function() {
             // console.log("minutes until next train: " + minAway);
             // console.log("the next arrival " + nextArrival);
 
-        //make a var for a new table row and create a td for each variable and append to the table row
         var $newRow = $("<tr>").append(
             $("<td>").text(trainName),
             $("<td>").text(destination),
@@ -112,7 +97,6 @@ $(document).ready(function() {
             $("<td>").text(minAway)
         );
 
-        //append table row to the tbody section of the table
         $("tbody").append($newRow);
     });
 })
